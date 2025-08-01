@@ -7,6 +7,7 @@ import { IoMdMenu } from "react-icons/io";
 import {useSession} from "next-auth/react";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { signOut } from "next-auth/react"
 
 const Nav = () => {
 const [navOpen, setNavOpen] = useState(false);
@@ -37,15 +38,16 @@ const [navOpen, setNavOpen] = useState(false);
     { url: "/", label: "Home" },
     { url: "/", label: "About" },
     { url: "/", label: "Contact" },
+    { url: "/Stories", label: "Stories" },
     
   ];
   return (
     <nav className="flex items-center justify-between shadow-md py-3 px-6 relative bg-orange-200">
-      <Link href={"#"} className="flex items-center gap-1 z-50">
+      <Link href={"/"} className="flex items-center gap-1 z-50">
         <p className="font-semibold text-xl text-gray-700">PENFOLK</p>
       </Link>
 
-      <div className="flex items-center gap-8 ml-auto max-lg:hidden">
+      <div className="flex items-center gap-8 ml-auto max-lg:hidden text-xl font-semibold ">
         {navItems.map((item, i) => (
           <Link key={i} href={item.url}>
             {item.label}
@@ -58,7 +60,7 @@ const [navOpen, setNavOpen] = useState(false);
           className="flex items-center gap-1 text-lg lg:border px-3 py-1 hover:text-blue-600 hover:border-blue-600 transition-colors duration-300 ml-8 max-lg:ml-auto z-50"
         >
           <FiUser />
-          <p className="max-lg:hidden">Sign In</p>
+          <p className="max-lg:hidden rounded-full ">Sign In</p>
         </Link>
 
       ): (
@@ -88,10 +90,17 @@ const [navOpen, setNavOpen] = useState(false);
           vertical: 'top',
           horizontal: 'left',
         }}
+        
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>
+         <Link href={"?"}>profile</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+         <Link href={"/add-stories"}>add stories</Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+           <button onClick={() => signOut()}>Sign Out</button>
+        </MenuItem>
       </Menu>
     </div>
       )}
@@ -102,7 +111,7 @@ const [navOpen, setNavOpen] = useState(false);
             <Link
               key={i}
               href={item.url}
-              className="text-lg hover:text-blue-600 transition-colors duration-300"
+              className="text-1xl font-bold hover:text-teal-300 transition-colors duration-300"
             >
               {item.label}
             </Link>
